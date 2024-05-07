@@ -1,0 +1,143 @@
+CREATE TABLE PlantOverview(
+	PlantID INT(5),
+	PlantSpecies VARCHAR(20),
+	PRIMARY KEY(PlantID)
+);
+
+CREATE TABLE PoisonousCompound(
+	PlantID INT(5),
+	HydrocyanicAcid BOOLEAN,
+	ToxicAlkaloids BOOLEAN,
+	Locoine BOOLEAN,
+	Glycosides BOOLEAN,
+	Resinoids BOOLEAN,
+	Cicutoxin BOOLEAN,
+	FOREIGN KEY(PlantID) REFERENCES PlantOverview(PlantID)
+);
+
+CREATE TABLE AreaFound(
+	PlantID INT(5),
+	Statewide BOOLEAN,
+	Central BOOLEAN,
+	West BOOLEAN,
+	East BOOLEAN,
+	FOREIGN KEY(PlantID) REFERENCES PlantOverview(PlantID)
+);
+
+CREATE TABLE Ecosystem(
+	PlantID INT(5),
+	WetMeadows BOOLEAN,
+	DryMeadows BOOLEAN,
+	Marshes BOOLEAN,
+	Streams BOOLEAN,
+	Grassland BOOLEAN,
+	Fens BOOLEAN,
+	Bogs BOOLEAN,
+	Forest BOOLEAN,
+	Sand BOOLEAN,
+	Roadsides BOOLEAN,
+	FOREIGN KEY(PlantID) REFERENCES PlantOverview(PlantID)
+);
+
+CREATE TABLE ExposureDangerous(
+	PlantID INT(5),
+	EyeContact SET('1', '2', '3', '4'),
+	Respiratory SET('1', '2', '3', '4'),
+	SkinContact SET('1', '2', '3', '4'),
+	Ingestion SET('1', '2', '3', '4'),
+	FOREIGN KEY(PlantID) REFERENCES PlantOverview(PlantID)
+);
+
+CREATE TABLE ExposureProtocol(
+	PlantID INT(5),
+	Eyes VARCHAR(40),
+	Respiratory VARCHAR(40),
+	Skin VARCHAR(40),
+	Ingestion VARCHAR(40),
+	FOREIGN KEY(PlantID) REFERENCES PlantOverview(PlantID)
+);
+
+INSERT INTO PlantOverview(PlantID, PlantSpecies)
+	VALUES(10, "Arrowgrass"),
+		(11, "Deathcamas"),
+		(12, "Dwarf milkweed"),
+		(13, "Lambert crazyweed"),
+		(14, "Larkspurs"),
+		(15, "Nebraska lupine"),
+		(16, "Nightshades"),
+		(17, "Poison hemlock"),
+		(18, "Riddell groundsel"),
+		(19, "Showy milkweed"),
+		(20, "Water hemlock"),
+		(21, "Chokecherry");
+
+INSERT INTO PoisonousCompound(PlantID, HydrocyanicAcid, ToxicAlkaloids, Locoine, Glycosides, Resinoids, Cicutoxin)
+	VALUES(10, 1, 0, 0, 0, 0, 0),
+		(11, 0,	1, 0, 0, 0, 0),
+		(12, 0, 0, 0, 1, 1, 0),
+		(13, 0, 0, 1, 0, 0, 0),
+		(14, 0, 1, 0, 0, 0, 0),
+		(15, 0, 1, 0, 0, 0, 0),
+		(16, 0, 1, 0, 0, 0, 0),
+		(17, 0, 1, 0, 0, 0, 0),
+		(18, 0, 1, 0, 0, 0, 0),
+		(19, 0, 0, 0, 1, 1, 0),
+		(20, 0, 0, 0, 0, 0, 1),
+		(21, 1, 0, 0, 0, 0, 0);
+
+INSERT INTO AreaFound(PlantID, Statewide, Central, West, East)
+	VALUES(10, 0, 1, 0, 0),
+		(11, 1, 0, 0, 0),
+		(12, 0, 1, 1, 0),
+		(13, 0, 1, 1, 0),
+		(14, 1, 0, 0, 0),
+		(15, 0, 1, 1, 0),
+		(16, 0, 1, 0, 0),
+		(17, 1, 0, 0, 0),
+		(18, 0, 1, 1, 0),
+		(19, 1, 0, 0, 0),
+		(20, 1, 0, 0, 0),
+		(21, 1, 0, 0, 0);
+
+INSERT INTO Ecosystem(PlantID, WetMeadows, DryMeadows, Marshes, Streams, Grassland, Fens, Bogs, Forest, Sand, Roadsides)
+	VALUES(10, 1, 0, 1, 1, 1, 1, 1, 0,	1, 0),
+		(11, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0),
+		(12, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1),
+		(13, 1, 0, 0, 0, 1, 0, 0, 1, 1, 0),
+		(14, 1, 1, 0, 0, 1, 0, 0, 1, 1, 0),
+		(15, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1),
+		(16, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1),
+		(17, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1),
+		(18, 0, 1, 1, 0, 1, 0, 0, 0, 1, 0),
+		(19, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1),
+		(20, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0),
+		(21, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0);
+
+INSERT INTO ExposureDangerous(PlantID, EyeContact, Respiratory, SkinContact, Ingestion)
+	VALUES(10, 2, 2, 1, 3),
+		(11, 4, 4, 4, 4),
+		(12, 2, 1, 2, 2),
+		(13, 2, 2, 2, 3),
+		(14, 2, 2, 1, 4),
+		(15, 2, 2, 2, 4),
+		(16, 1, 2, 1, 3),
+		(17, 2, 1, 1, 4),
+		(18, 2, 1, 2, 2),
+		(19, 2, 1, 2, 2),
+		(20, 2, 2, 2, 4),
+		(21, 2, 2, 2, 4);
+
+INSERT INTO ExposureProtocol(PlantID, Eyes, Respiratory, Skin, Ingestion)
+	VALUES(10, "Rinse With Clean Water", "Move to Fresh Air", "Wash Area With Soap and Water", "Seek Medical Attention"),
+		(11, "Seek Medical Attention", "Seek Medical Attention", "Seek Medical Attention", "Seek Medical Attention"),
+		(12, "Rinse With Clean Water", "Move to Fresh Air", "Wash Area With Soap and Water", "Seek Medical Attention"),
+		(13, "Seek Medical Attention", "Seek Medical Attention", "Wash Area With Soap and Water", "Seek Medical Attention"),
+		(14, "Rinse With Clean Water", "Seek Medical Attention", "Wash Area With Soap and Water", "Seek Medical Attention"),
+		(15, "Rinse With Clean Water", "Seek Medical Attention", "Wash Area With Soap and Water", "Seek Medical Attention"),
+		(16, "Rinse With Clean Water", "Seek Medical Attention", "Wash Area With Soap and Water", "Seek Medical Attention"),
+		(17, "Rinse With Clean Water", "Move to Fresh Air", "Wash Area With Soap and Water", "Seek Medical Attention"),
+		(18, "Rinse With Clean Water", "Move to Fresh Air", "Wash Area With Soap and Water", "Seek Medical Attention"),
+		(19, "Rinse With Clean Water", "Move to Fresh Air", "Wash Area With Soap and Water", "Seek Medical Attention"),
+		(20, "Rinse With Clean Water", "Seek Medical Attention", "Wash Area With Soap and Water", "Seek Medical Attention"),
+		(21, "Rinse With Clean Water", "Seek Medical Attention", "Wash Area With Soap and Water", "Seek Medical Attention");
+
